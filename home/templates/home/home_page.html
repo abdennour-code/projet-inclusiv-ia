@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block content %}
+
+<!-- 1. BANNIÈRE HERO -->
+<section class="py-5 bg-primary text-white rounded-4 mb-5 shadow-sm p-4 p-md-5">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7 text-start">
+            <h1 class="display-5 fw-bold mb-3">
+                Inclusiv'IA : L'IA au service de l'autonomie et du handicap
+            </h1>
+            <p class="lead mb-4 opacity-90">
+                Média d'information et de décryptage des innovations technologiques d'accessibilité et d'assistance pour le handicap.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="/nos-dossiers/" class="btn btn-light btn-lg fw-bold text-primary">Découvrir nos dossiers &rarr;</a>
+                <a href="/contact/" class="btn btn-outline-light btn-lg">Demander un audit</a>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center">
+            {% if page.banner_image %}
+                {% image page.banner_image fill-600x400 class="img-fluid rounded-3 shadow" alt="Visuel Hero Inclusiv'IA" %}
+            {% else %}
+                <!-- Image statique si aucune image n'est sélectionnée dans Wagtail -->
+                <img src="{% static 'images/banniere-accueil.jpg' %}" class="img-fluid rounded-3 shadow-sm" alt="Visuel Hero Inclusiv'IA">
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- 2. BLOC PRÉSENTATION & GENÈSE DU PROJET -->
+<section class="py-4 mb-5">
+    <div class="p-4 p-md-5 bg-white rounded-4 border shadow-sm text-start">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <h2 class="fw-bold mb-3">Présentation & Genèse du Projet</h2>
+                <h3 class="h5 text-primary mb-3">Inclusiv'IA : Mission & Accompagnement</h3>
+                <p class="text-muted fs-6">
+                    <strong>Inclusiv'IA</strong> est un média d'information dédié au décryptage des innovations technologiques d'accessibilité. Notre mission est de faire découvrir les solutions d'intelligence artificielle qui transforment concrètement l'autonomie des personnes en situation de handicap.
+                </p>
+                <p class="text-muted mb-0">
+                    Accompagnement des usages et sensibilisation aux outils d'assistance (transcription LSF, vision par IA, cobotique) forment le cœur de notre démarche.
+                </p>
+            </div>
+            <div class="col-lg-5 text-center">
+                <div class="p-2 bg-light rounded-3 border">
+                    <img src="{% static 'images/genese_projet.jpg' %}" class="img-fluid rounded-3 shadow-sm" alt="Visuel Genèse du Projet">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. TECHNOLOGIES DU MOMENT (SNIPPETS DYNAMIQUES) -->
+<section class="py-4 mb-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Technologies d'accessibilité phares</h2>
+        <p class="text-muted">Notre sélection d'outils d'assistance par IA qui transforment concrètement l'autonomie au quotidien.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for tech in technologies %}
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm overflow-hidden d-flex flex-column">
+                {% if tech.image %}
+                    {% image tech.image fill-400x230 class="card-img-top" style="height: 200px; object-fit: cover;" alt=tech.nom %}
+                {% else %}
+                    <div class="bg-light text-center py-5 text-muted" style="height: 200px;">
+                        <i class="bi bi-cpu fs-1"></i>
+                        <p class="mb-0 small">Illustration {{ tech.nom }}</p>
+                    </div>
+                {% endif %}
+
+                <div class="card-body p-4 text-center flex-grow-1">
+                    <span class="badge {{ tech.badge_couleur }} mb-3 fs-6">{{ tech.categorie }}</span>
+                    <h3 class="h5 card-title fw-bold text-dark">{{ tech.nom }}</h3>
+                    <p class="card-text text-muted">{{ tech.description }}</p>
+                </div>
+
+                <div class="card-footer bg-white border-0 text-center pb-4 mt-auto">
+                    {% if tech.lien_officiel %}
+                        <a href="{{ tech.lien_officiel }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary fw-bold">
+                            Voir le site officiel &rarr;
+                        </a>
+                    {% else %}
+                        <span class="badge bg-light text-secondary border p-2">Fiche d'information</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center text-muted py-5">
+            <p class="fs-5">Aucune technologie enregistrée pour le moment.</p>
+            <p class="small">Rendez-vous dans <strong>Wagtail Admin &gt; Snippets &gt; Technologies IA</strong> pour en ajouter une !</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

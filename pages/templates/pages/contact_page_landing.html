@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="card shadow-sm border-0 p-5 mx-auto rounded-4 my-4" style="max-width: 650px;">
+        
+        <!-- Icône de succès -->
+        <div class="mb-4 text-success">
+            <i class="bi bi-check-circle-fill display-1"></i>
+        </div>
+
+        <!-- Titre de confirmation -->
+        <h1 class="h2 fw-bold mb-3">Merci, votre message a bien été envoyé !</h1>
+        
+        <!-- Texte de remerciement administrable dans Wagtail -->
+        {% if page.thank_you_text %}
+            <div class="lead text-secondary mb-4">
+                {{ page.thank_you_text|richtext }}
+            </div>
+        {% else %}
+            <p class="lead text-secondary mb-4">
+                Merci de nous avoir contactés. Votre message a bien été transmis et nous vous répondrons dans les plus brefs délais.
+            </p>
+        {% endif %}
+
+        <!-- Bouton retour -->
+        <div>
+            <a href="/" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
+                <i class="bi bi-house-door-fill me-2"></i>Retour à l'accueil
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

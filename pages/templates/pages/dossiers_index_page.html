@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">{{ page.title }}</h1>
+    {% if page.intro %}
+        <div class="lead mb-4">{{ page.intro|richtext }}</div>
+    {% endif %}
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for dossier in page.get_children.live.specific %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                    {% if dossier.main_image %}
+                        {% image dossier.main_image fill-400x250 class="card-img-top" alt=dossier.title %}
+                    {% else %}
+                        <div class="bg-secondary text-white text-center py-5">
+                            <i class="bi bi-journal-text fs-1"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark">{{ dossier.title }}</h5>
+                        {% if dossier.chapeau %}
+                            <p class="card-text text-muted small">{{ dossier.chapeau|truncatewords:20 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="{% pageurl dossier %}" class="btn btn-primary">Lire le dossier</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">Aucun dossier disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

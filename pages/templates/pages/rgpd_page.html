@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="container py-5">
+    <article class="mx-auto bg-white p-4 p-md-5 rounded-4 shadow-sm" style="max-width: 900px;">
+        
+        <!-- Fil d'Ariane -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ page.title }}</li>
+            </ol>
+        </nav>
+
+        <!-- Titre principal de la page -->
+        <header class="border-bottom pb-3 mb-4">
+            <h1 class="display-6 fw-bold text-dark">{{ page.title }}</h1>
+            {% if page.intro %}
+                <div class="lead text-muted fw-normal mt-2">
+                    {{ page.intro|richtext }}
+                </div>
+            {% endif %}
+        </header>
+
+        <!-- Contenu administrable rédigé via Wagtail Admin -->
+        <div class="content-body text-secondary lh-lg fs-5">
+            {{ page.body|richtext }}
+        </div>
+
+    </article>
+</div>
+{% endblock %}

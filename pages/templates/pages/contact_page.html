@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container" style="max-width: 750px;">
+        <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border">
+            
+            <!-- 1. TITRE ET SOUS-TITRE CONFORMES AUX WIREFRAMES -->
+            <h1 class="fw-bold mb-3 text-center">Contact & Demande d'Audit Accessibilité</h1>
+            <p class="text-muted text-center mb-4">
+                Une question sur nos dossiers ou besoin d'un accompagnement sur l'IA inclusive ? Écrivez-nous.
+            </p>
+
+            <!-- 2. FORMULAIRE ÉPURÉ (SANS TEXTE PARASITE À DROITE) -->
+            <form action="{% pageurl page %}" method="POST">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3 text-start">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-bold">
+                            {{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}
+                        </label>
+                        
+                        <!-- Rendu du champ seul -->
+                        <div class="w-100">
+                            {{ field }}
+                        </div>
+                        
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Envoyer la demande &rarr;</button>
+                </div>
+            </form>
+
+            <p class="small text-muted mt-3">
+                 <i class="bi bi-info-circle me-1"></i>
+                 Les informations recueillies via ce formulaire sont utilisées uniquement pour répondre à votre demande. 
+                Pour en savoir plus sur la gestion de vos données et vos droits, consultez nos 
+                <a href="/mentions-legales/" class="text-decoration-underline text-muted">Mentions légales & RGPD</a>.
+            </p>
+
+            <!-- 3. BLOC COORDONNÉES CITÉ NUMÉRIQUE -->
+            <div class="mt-5 pt-4 border-top text-start">
+                <h2 class="h5 fw-bold mb-3">Coordonnées :</h2>
+                <p class="mb-1 text-dark"><strong>Cité Numérique</strong></p>
+                <p class="mb-1 text-muted">2 rue Marc Sangnier, 33130 - Bègles</p>
+                <p class="mb-0 text-muted">N° de téléphone : 05 54 58 00 20</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
