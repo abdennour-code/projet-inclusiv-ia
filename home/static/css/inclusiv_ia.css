@@ -11,6 +11,12 @@
     --border-color: #e2e8f0;
 }
 
+/* Style personnalisé pour le Hero Banner */
+.hero-banner-custom {
+    background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%) !important;
+    color: #ffffff !important;
+}
+
 /* 2. Style global du site */
 body {
     background-color: var(--light-bg);
@@ -26,33 +32,65 @@ body {
     overflow: hidden;
 }
 
+/* Personnalisation sur-mesure des titres et textes des cartes */
+.card-title {
+    font-size: 19px !important;
+    font-weight: 700;
+}
+
+.card-text-custom {
+    font-size: 16px !important;
+    line-height: 1.55;
+    color: #475569;
+    text-align: left;
+}
+
 /* Effet au survol des cartes */
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1) !important;
 }
 
-/* Hauteur uniforme pour toutes les images de cartes sans déformation */
+/* Hauteur fixe uniforme : alignement parfait des cartes + visuel du haut préservé */
 .card-img-top, 
 .dossier-thumb {
-    height: 200px;
-    object-fit: cover;
+    height: 250px !important; /* Hauteur fixe généreuse et égale pour toutes les cartes */
+    object-fit: cover !important; /* Remplit proprement 100% du cadre sans déformer */
+    object-position: top !important; /* Aligne l'image par le HAUT (garde la barre de menu) */
     width: 100%;
 }
 
-/* 4. Retouches Header & Navbar */
-header.navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid var(--border-color);
+/* 4. Retouches Header & Navbar (Bleu Nuit #0f172a type BriefIA) */
+.custom-header {
+    background-color: var(--dark-navy) !important;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
 }
 
-.nav-link.active {
+/* Liens du menu */
+.custom-header .nav-link {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Survol des liens du menu */
+.custom-header .nav-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Lien de la page active (Onglet allumé) */
+.custom-header .nav-link.active {
+    color: #ffffff !important;
+    background-color: var(--primary-blue) !important;
     font-weight: 700;
-    color: var(--primary-blue) !important;
 }
 
-/* 5. Pied de page (Footer) */
-footer {
-    background-color: #ffffff;
-    border-top: 1px solid var(--border-color);
+/* 5. Pied de page (Footer harmonisé) */
+.custom-footer {
+    background-color: var(--dark-navy) !important;
+    color: #ffffff;
 }

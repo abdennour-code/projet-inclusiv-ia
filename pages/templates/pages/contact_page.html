@@ -1,28 +1,41 @@
 {% extends "base.html" %}
+
+{# 1. CHARGEMENT OBLIGATOIRE DES BALISES WAGTAIL #}
 {% load wagtailcore_tags %}
 
 {% block content %}
-<section class="py-5 bg-light">
-    <div class="container" style="max-width: 750px;">
-        <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border">
-            
-            <!-- 1. TITRE ET SOUS-TITRE CONFORMES AUX WIREFRAMES -->
-            <h1 class="fw-bold mb-3 text-center">Contact & Demande d'Audit Accessibilité</h1>
-            <p class="text-muted text-center mb-4">
-                Une question sur nos dossiers ou besoin d'un accompagnement sur l'IA inclusive ? Écrivez-nous.
-            </p>
-
-            <!-- 2. FORMULAIRE ÉPURÉ (SANS TEXTE PARASITE À DROITE) -->
-            <form action="{% pageurl page %}" method="POST">
-                {% csrf_token %}
+<div class="container py-5">
+    <div class="row g-4 align-items-start">
+        
+        <!-- COLONNE 1 : FORMULAIRE DE CONTACT DYNAMIQUE WAGTAIL -->
+        <div class="col-lg-7">
+            <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border">
                 
-                {% for field in form %}
+                {# Titre de la page #}
+                <h1 class="fw-bold h2 mb-3 text-start">{{ page.title }}</h1>
+                
+                {# CORRECTION ICI : Ajout du filtre |richtext pour enlever les balises data-block-key #}
+                {% if page.intro %}
+                    <div class="text-muted mb-4 text-start">
+                        {{ page.intro|richtext }}
+                    </div>
+                {% endif %}
+
+                {# Formulaire dynamique généré par Wagtail #}
+                <form action="{% pageurl page %}" method="POST">
+                    {% csrf_token %}
+
+                    {# Boucle automatique sur les champs créés dans Wagtail #}
+                    {% for field in form %}
                     <div class="mb-3 text-start">
                         <label for="{{ field.id_for_label }}" class="form-label fw-bold">
-                            {{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}
+                            {{ field.label }}
+                            {# Astérisque rouge pour les champs obligatoires #}
+                            {% if field.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
                         </label>
                         
-                        <!-- Rendu du champ seul -->
                         <div class="w-100">
                             {{ field }}
                         </div>
@@ -33,29 +46,55 @@
                             </div>
                         {% endif %}
                     </div>
-                {% endfor %}
+                    {% endfor %}
 
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Envoyer la demande &rarr;</button>
-                </div>
-            </form>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                            Envoyer la demande &rarr;
+                        </button>
+                    </div>
+                </form>
 
-            <p class="small text-muted mt-3">
-                 <i class="bi bi-info-circle me-1"></i>
-                 Les informations recueillies via ce formulaire sont utilisées uniquement pour répondre à votre demande. 
-                Pour en savoir plus sur la gestion de vos données et vos droits, consultez nos 
-                <a href="/mentions-legales/" class="text-decoration-underline text-muted">Mentions légales & RGPD</a>.
-            </p>
+                {# Notice d'information RGPD obligatoire #}
+                <p class="small text-muted mt-4 mb-0 text-start">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Les informations recueillies via ce formulaire sont utilisées uniquement pour répondre à votre demande. 
+                    Pour en savoir plus sur la gestion de vos données et vos droits, consultez nos 
+                    <a href="/mentions-legales/" class="text-decoration-underline text-muted">Mentions légales & RGPD</a>.
+                </p>
 
-            <!-- 3. BLOC COORDONNÉES CITÉ NUMÉRIQUE -->
-            <div class="mt-5 pt-4 border-top text-start">
-                <h2 class="h5 fw-bold mb-3">Coordonnées :</h2>
-                <p class="mb-1 text-dark"><strong>Cité Numérique</strong></p>
-                <p class="mb-1 text-muted">2 rue Marc Sangnier, 33130 - Bègles</p>
-                <p class="mb-0 text-muted">N° de téléphone : 05 54 58 00 20</p>
             </div>
-
         </div>
+
+        <!-- COLONNE 2 : COORDONNÉES DE LA CITÉ NUMÉRIQUE -->
+        <div class="col-lg-5">
+            <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border border-start border-4 border-primary text-start">
+                <h2 class="h4 fw-bold mb-3">Nos Coordonnées</h2>
+                <p class="text-muted small mb-4">
+                    Inclusiv'IA est implanté au cœur du pôle technologique de la métropole.
+                </p>
+
+                <div class="mb-3">
+                    <h3 class="h6 fw-bold text-dark mb-1">📍 Adresse</h3>
+                    <p class="text-secondary mb-0">
+                        <strong>Cité Numérique</strong><br>
+                        2 rue Marc Sangnier<br>
+                        33130 Bègles
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 fw-bold text-dark mb-1">📞 Téléphone</h3>
+                    <p class="text-secondary mb-0">05 54 58 00 20</p>
+                </div>
+
+                <div>
+                    <h3 class="h6 fw-bold text-dark mb-1">✉️ E-mail</h3>
+                    <p class="text-secondary mb-0">alaouar.apprenant@simplon.co</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-</section>
+</div>
 {% endblock %}
