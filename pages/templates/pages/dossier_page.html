@@ -3,28 +3,64 @@
 
 {% block content %}
 <div class="container my-5">
+    <!-- Fil d'Ariane pour la navigation hiérarchique -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
             <li class="breadcrumb-item"><a href="{{ page.get_parent.url }}">Nos Dossiers</a></li>
-            <li class="breadcrumb-item active">{{ page.title }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ page.title }}</li>
         </ol>
     </nav>
 
-    <h1 class="mb-3">{{ page.title }}</h1>
+    <!-- En-tête de l'article : Catégorie et Titre -->
+    <header class="mb-4">
+        <!-- Restitution du libellé lisible de la catégorie liée au modèle -->
+        {% if page.categorie %}
+            <span class="badge bg-primary mb-2">{{ page.get_categorie_display }}</span>
+        {% endif %}
+        <h1 class="mb-3">{{ page.title }}</h1>
+    </header>
 
+    <!-- Image principale avec filtre de redimensionnement Wagtail -->
     {% if page.main_image %}
         <div class="my-4 text-center">
             {% image page.main_image width-800 class="img-fluid rounded shadow-sm" alt=page.title %}
         </div>
+    {% elif page.image_couverture %}
+        <div class="my-4 text-center">
+            {% image page.image_couverture width-800 class="img-fluid rounded shadow-sm" alt=page.title %}
+        </div>
     {% endif %}
 
-    <div class="lead mb-4">
-        {{ page.intro }}
+    <!-- Chapeau d'introduction -->
+    {% if page.intro %}
+        <div class="lead mb-4">
+            {{ page.intro }}
+        </div>
+    {% endif %}
+
+    <!-- Corps de l'article formaté via le filtre RichText -->
+    <div class="content mb-5">
+        {% if page.body %}
+            {{ page.body|richtext }}
+        {% elif page.contenu_detaille %}
+            {{ page.contenu_detaille|richtext }}
+        {% endif %}
     </div>
 
-    <div class="content">
-        {{ page.body|richtext }}
-    </div>
+    <!-- Section Bibliographie & Sources -->
+    {% if page.bibliographie %}
+        <hr class="my-5 border-secondary border-opacity-25">
+        
+        <section class="bg-light p-4 rounded-3 border">
+            <h2 class="h5 mb-3 text-dark fw-bold">
+                <i class="bi bi-journal-bookmark me-2"></i>Bibliographie & Sources
+            </h2>
+            <!-- Filtre RichText pour restituer les puces, caractères gras et hyperliens insérés en admin -->
+            <div class="small text-secondary mb-0">
+                {{ page.bibliographie|richtext }}
+            </div>
+        </section>
+    {% endif %}
 </div>
 {% endblock %}
