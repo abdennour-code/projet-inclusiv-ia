@@ -94,3 +94,74 @@ body {
     background-color: var(--dark-navy) !important;
     color: #ffffff;
 }
+
+/* ==========================================================================
+   CORRECTION RESPONSIVE MOBILE : EMPILAGE DES VIGNETTES ET CARTES D'ACCUEIL
+   ========================================================================== */
+
+/* 1. Sur Mobile (affichage par défaut) : Force la grille à s'empiler en 1 seule colonne */
+.home-dossiers-grid,
+.cards-container,
+.vignettes-container {
+    display: flex;
+    flex-direction: column; /* Force 1 seule carte par ligne sur smartphone */
+    gap: 1.5rem;            /* Ajoute un espace vertical propre entre chaque vignette */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 2. Sur Mobile : S'assure que chaque vignette occupe 100% de la largeur du mobile */
+.card-item,
+.vignette-item,
+.snippet-card {
+    width: 100% !important;  /* Supprime les largeurs fixes qui compressaient les cartes */
+    max-width: 100%;
+    box-sizing: border-box;  /* Inclut les bordures et rembourrages dans la largeur totale */
+}
+
+/* 3. Sur Mobile : Permet au titre et au badge (ex: "Handicap Moteur") de s'empiler proprement */
+.card-header-block,
+.card-title-container {
+    display: flex;
+    flex-direction: column; /* Le badge passe sous ou sur le titre au lieu d'être coincé à côté */
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+/* 4. Pour les images des cartes : Évite qu'elles ne soient déformées ou rognées bizarrement */
+.card-item img,
+.vignette-item img {
+    width: 100%;
+    height: 180px;          /* Fixe une hauteur uniforme pour toutes les images */
+    object-fit: cover;      /* Recadre proprement l'image sans l'étirer */
+    border-radius: 8px 8px 0 0; /* Arrondit les coins supérieurs si nécessaire */
+}
+
+
+/* ==========================================================================
+   AFFICHAGE PC ET TABLETTE (Écrans supérieurs à 768px)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+    /* Sur grand écran : Remet les cartes en ligne côte à côte */
+    .home-dossiers-grid,
+    .cards-container,
+    .vignettes-container {
+        flex-direction: row;  /* Remet la disposition horizontale */
+        flex-wrap: wrap;       /* Autorise le passage à la ligne si besoin */
+    }
+
+    /* Définit la largeur des cartes sur ordinateur (ex: 3 par ligne) */
+    .card-item,
+    .vignette-item,
+    .snippet-card {
+        width: calc(33.33% - 1rem) !important; /* 3 colonnes égales avec espace */
+    }
+
+    /* Remet le badge à côté du titre sur grand écran */
+    .card-header-block,
+    .card-title-container {
+        flex-direction: row;
+        align-items: center;
+    }
+}

@@ -3,35 +3,67 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="mb-4">{{ page.title }}</h1>
-    {% if page.intro %}
-        <div class="lead mb-4">{{ page.intro|richtext }}</div>
-    {% endif %}
+    <!-- En-tête de la page Nos Dossiers -->
+    <header class="text-center mb-5">
+        <h1 class="display-5 fw-bold mb-3">{{ page.title }}</h1>
+        {% if page.intro %}
+            <div class="lead text-muted col-lg-8 mx-auto">
+                {{ page.intro|richtext }}
+            </div>
+        {% endif %}
+    </header>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for dossier in page.get_children.live.specific %}
+    <!-- Grille des 4 dossiers thématiques -->
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for dossier in dossiers %}
             <div class="col">
-                <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                    <!-- Image principale / Vignette -->
                     {% if dossier.main_image %}
-                        {% image dossier.main_image fill-400x250 class="card-img-top" alt=dossier.title %}
+                        {% image dossier.main_image fill-600x350 class="card-img-top" alt=dossier.title %}
                     {% else %}
-                        <div class="bg-secondary text-white text-center py-5">
-                            <i class="bi bi-journal-text fs-1"></i>
+                        <div class="bg-light text-center py-5 text-muted">
+                            <i class="bi bi-journal-text display-4"></i>
                         </div>
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-dark">{{ dossier.title }}</h5>
-                        {% if dossier.chapeau %}
-                            <p class="card-text text-muted small">{{ dossier.chapeau|truncatewords:20 }}</p>
+
+                    <div class="card-body d-flex flex-column">
+                        <!-- Badge de Catégorie / Thématique -->
+                        {% if dossier.categorie %}
+                            <div class="mb-2">
+                                <span class="badge bg-primary">
+                                    {{ dossier.get_categorie_display }}
+                                </span>
+                            </div>
                         {% endif %}
-                    </div>
-                    <div class="card-footer bg-white border-0 pb-4">
-                        <a href="{% pageurl dossier %}" class="btn btn-primary">Lire le dossier</a>
+
+                        <!-- Titre du dossier -->
+                        <h2 class="card-title h4 fw-bold">
+                            <a href="{{ dossier.url }}" class="text-decoration-none text-dark stretched-link">
+                                {{ dossier.title }}
+                            </a>
+                        </h2>
+
+                        <!-- Chapeau / Résumé -->
+                        {% if dossier.chapeau %}
+                            <p class="card-text text-secondary mt-2">
+                                {{ dossier.chapeau|truncatewords:25 }}
+                            </p>
+                        {% endif %}
+
+                        <!-- Lien d'accès en bas de carte -->
+                        <div class="mt-auto pt-3 border-top">
+                            <span class="text-primary fw-semibold small">
+                                Consulter le dossier <i class="bi bi-arrow-right ms-1"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         {% empty %}
-            <p class="text-muted">Aucun dossier disponible pour le moment.</p>
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">Aucun dossier n'a encore été publié sous cette page index.</p>
+            </div>
         {% endfor %}
     </div>
 </div>

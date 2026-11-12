@@ -7,18 +7,10 @@
 {% block content %}
 <div class="container py-4">
 
-    <!-- ==================================================================== -->
-    <!-- 1. HERO BANNER (Bannière d'accueil dynamique Wagtail)               -->
-    <!-- ==================================================================== -->
+    <!-- 1. HERO BANNER -->
     <section class="text-white p-4 p-lg-5 rounded-4 shadow-sm mb-5" style="background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%);">
         <div class="row align-items-center g-4">
-            
-            <!-- -------------------------------------------------------------- -->
-            <!-- COLONNE GAUCHE (6/12) : Titre, Paragraphe & Boutons d'action   -->
-            <!-- -------------------------------------------------------------- -->
             <div class="col-lg-6">
-                
-                {# 1. TITRE DU HERO : Affiche la saisie Wagtail, sinon le titre par défaut #}
                 <h1 class="fw-bold display-6 mb-3">
                     {% if page.intro_title %}
                         {{ page.intro_title }}
@@ -27,7 +19,6 @@
                     {% endif %}
                 </h1>
 
-                {# 2. PARAGRAPHE D'INTRO : Affiche la saisie Wagtail, sinon le texte par défaut #}
                 <p class="lead mb-4">
                     {% if page.intro_text %}
                         {{ page.intro_text|richtext }}
@@ -36,7 +27,6 @@
                     {% endif %}
                 </p>
 
-                {# 3. BOUTONS DE NAVIGATION (Liens vers les autres pages du site) #}
                 <div class="d-flex flex-wrap gap-2">
                     <a href="/nos-dossiers/" class="btn btn-light text-primary fw-bold">
                         Découvrir nos dossiers &rarr;
@@ -47,30 +37,20 @@
                 </div>
             </div>
 
-            <!-- -------------------------------------------------------------- -->
-            <!-- COLONNE DROITE (6/12) : Image d'illustration de la bannière    -->
-            <!-- -------------------------------------------------------------- -->
             <div class="col-lg-6 text-center">
-                {# Si une image est téléversée dans Wagtail, on l'affiche avec le filtre d'image Wagtail #}
                 {% if page.banner_image %}
                     {% image page.banner_image fill-650x400 class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt="IA et Handicap" %}
-                {# Sinon, on affiche l'image statique de secours de notre dossier static/images/ #}
                 {% else %}
                     <img src="{% static 'images/banniere-accueil.jpg' %}" class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt="IA et Handicap">
                 {% endif %}
             </div>
-
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 2. PRÉSENTATION & GENÈSE DU PROJET         -->
-    <!-- ========================================== -->
+    <!-- 2. PRÉSENTATION & GENÈSE DU PROJET -->
     <section class="bg-white p-4 p-lg-5 rounded-4 shadow-sm border mb-5">
         <div class="row align-items-center g-4">
-            
             <div class="col-lg-7">
-                {# Titre de la Genèse : Wagtail ou valeur par défaut #}
                 <h2 class="fw-bold h3 mb-2">
                     {% if page.genese_title %}
                         {{ page.genese_title }}
@@ -78,9 +58,7 @@
                         Présentation & Genèse du Projet
                     {% endif %}
                 </h2>
-                {% comment %} <h3 class="h5 text-primary fw-semibold mb-3">Inclusiv'IA : Mission & Accompagnement</h3> {% endcomment %}
                 
-                {# Texte de la Genèse : Wagtail ou texte par défaut #}
                 <div class="lead text-dark mb-0">
                     {% if page.genese_text %}
                         {{ page.genese_text|richtext }}
@@ -95,7 +73,6 @@
                 </div>
             </div>
 
-            <!-- Image de la Genèse : Image Wagtail ou image statique -->
             <div class="col-lg-5 text-center">
                 {% if page.genese_image %}
                     {% image page.genese_image fill-500x300 class="img-fluid rounded-3 shadow-sm" alt="Genèse du projet" %}
@@ -103,13 +80,10 @@
                     <img src="{% static 'images/genese_projet.jpg' %}" class="img-fluid rounded-3 shadow-sm" alt="Genèse du projet Inclusiv'IA">
                 {% endif %}
             </div>
-
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 3. TECHNOLOGIES PHARES (GRILLE DES SNIPPETS)-->
-    <!-- ========================================== -->
+    <!-- 3. TECHNOLOGIES PHARES (GRILLE DES SNIPPETS) -->
     <section class="py-2">
         <div class="text-center mb-4">
             <h2 class="fw-bold h3">Technologies d'accessibilité phares</h2>
@@ -118,28 +92,24 @@
             </p>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {# Boucle qui parcourt chaque technologie enregistrée dans les Snippets Wagtail #}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             {% for tech in technologies %}
             <div class="col">
-                <div class="card h-100 shadow-sm border rounded-3">
-                    {# Image du Snippet recadrée par Wagtail #}
+                <div class="card h-100 shadow-sm border rounded-3 overflow-hidden">
                     {% if tech.image %}
-                        {% image tech.image max-500x350 class="card-img-top" alt=tech.nom %}
+                        {% image tech.image max-500x350 class="card-img-top" style="height: 180px; object-fit: cover;" alt=tech.nom %}
                     {% endif %}
                     
                     <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-2">
                             <h3 class="h5 card-title fw-bold mb-0">{{ tech.nom }}</h3>
-                            {# Badge coloré dynamique généré par la propriété Python badge_couleur #}
                             {% if tech.categorie %}
-                                <span class="badge {{ tech.badge_couleur }}">{{ tech.categorie }}</span>
+                                <span class="badge {{ tech.badge_couleur }} align-self-start align-self-sm-center">{{ tech.categorie }}</span>
                             {% endif %}
                         </div>
 
                         <p class="card-text-custom mb-4 flex-grow-1">{{ tech.description }}</p>
                         
-                        {# Lien vers le site officiel de l'outil #}
                         {% if tech.lien_officiel %}
                             <a href="{{ tech.lien_officiel }}" target="_blank" class="btn btn-outline-primary btn-sm mt-2">
                                 Voir le site officiel &rarr;
@@ -149,7 +119,6 @@
                 </div>
             </div>
             {% empty %}
-            {# Message si aucun Snippet n'a été créé dans l'admin Wagtail #}
             <div class="col-12 text-center text-muted py-4">
                 <p class="mb-0">Aucune technologie IA renseignée pour le moment dans les Snippets.</p>
             </div>

@@ -11,6 +11,9 @@ from modelcluster.fields import ParentalKey
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 
+import re
+from django.utils.safestring import mark_safe
+from wagtail.templatetags.wagtailcore_tags import richtext
 
 # ==========================================
 # 1. PAGES DOSSIERS (Nos Dossiers & Articles)
@@ -71,6 +74,19 @@ class DossierPage(Page):
     bibliographie = RichTextField(
         verbose_name="Bibliographie & Sources"
     )
+    # Propriété Python pour ouvrir les liens bibliographiques dans un nouvel onglet
+    @property
+    def bibliographie_externe(self):
+        """Transforme les liens de la bibliographie pour qu'ils s'ouvrent dans un nouvel onglet."""
+        if not self.bibliographie:
+            return ""
+        html_rendu = str(richtext(self.bibliographie))
+        html_modifie = re.sub(
+            r'<a\s+href="(https?://[^"]+)"',
+            r'<a href="\1" target="_blank" rel="noopener noreferrer"',
+            html_rendu
+        )
+        return mark_safe(html_modifie)
 
     # Panneaux de saisie affichés dans l'interface d'administration Wagtail
     content_panels = Page.content_panels + [
