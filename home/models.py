@@ -86,8 +86,8 @@ class HomePage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name="Image de la bannière"
-        # help_text="Le titre saisi lors du téléversement de l'image servira de texte alternatif (RGAA)."
+        verbose_name="Image de la bannière",
+        help_text="Le titre saisi lors du téléversement de l'image servira de texte alternatif (RGAA).",
     )
 
     # --- BLOC 2 : GENÈSE DU PROJET (Champs modifiables dans Wagtail) ---
@@ -99,8 +99,8 @@ class HomePage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name="Image de la Genèse"
-        # help_text="Le titre saisi lors du téléversement de l'image servira de texte alternatif (RGAA)."
+        verbose_name="Image de la Genèse",
+        help_text="Le titre saisi lors du téléversement de l'image servira de texte alternatif (RGAA).",
     )
 
     # Affichage des champs dans le panneau de modification de Wagtail

@@ -28,7 +28,7 @@
                 </p>
 
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="/nos-dossiers/" class="btn btn-light text-primary fw-bold">
+                    <a href="/nos-dossiers/" class="btn btn-light fw-bold" style="color: #0f172a;">
                         Découvrir nos dossiers &rarr;
                     </a>
                     <a href="/contact/" class="btn btn-outline-light fw-bold">
@@ -39,9 +39,9 @@
 
             <div class="col-lg-6 text-center">
                 {% if page.banner_image %}
-                    {% image page.banner_image fill-650x400 class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt="IA et Handicap" %}
+                    {% image page.banner_image fill-650x400 class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt=page.banner_image.title %}
                 {% else %}
-                    <img src="{% static 'images/banniere-accueil.jpg' %}" class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt="IA et Handicap">
+                    <img src="{% static 'images/banniere-accueil.jpg' %}" class="img-fluid rounded-3 shadow-lg w-100" style="max-height: 360px; object-fit: cover;" alt="Bannière Inclusiv'IA : L'IA au service de l'autonomie et du handicap">
                 {% endif %}
             </div>
         </div>
@@ -75,7 +75,7 @@
 
             <div class="col-lg-5 text-center">
                 {% if page.genese_image %}
-                    {% image page.genese_image fill-500x300 class="img-fluid rounded-3 shadow-sm" alt="Genèse du projet" %}
+                    {% image page.genese_image fill-500x300 class="img-fluid rounded-3 shadow-sm" alt=page.genese_image.title %}
                 {% else %}
                     <img src="{% static 'images/genese_projet.jpg' %}" class="img-fluid rounded-3 shadow-sm" alt="Genèse du projet Inclusiv'IA">
                 {% endif %}
