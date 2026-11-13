@@ -24,6 +24,7 @@ BASE_DIR = PROJECT_DIR.parent
 # Application definition
 
 INSTALLED_APPS = [
+  
     "home",
     "pages",  #  l'application multi-pages
     "search",
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
+    "wagtail.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
